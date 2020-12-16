@@ -5,12 +5,17 @@
     "private": true,
     "devDependencies": {
         "@types/aws-lambda": "^8.10.66",
+        "@types/jest": "^26.0.19",
         "@types/node": "^14.14.14",
         "aws-sdk": "^2.811.0",
         "jest": "^26.6.3",
+        "ts-jest": "^26.4.4",
         "typescript": "^4.1.3"
     },
     "scripts": {
-        "test": "jest"
+        "test": "jest",
+        "prebuild": "mkdir -p ./built",
+        "copy-dependencies": "cp ./package.json ./built/package.json && cd built && npm install --only=prod",
+        "compile": "tsc"
     }
 }

@@ -22,7 +22,8 @@ Resources:
   helloFromLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: app/built/hello-from-lambda.helloFromLambdaHandler
+      Handler: hello-from-lambda.helloFromLambdaHandler
+      CodeUri: ./built
       Runtime: nodejs12.x
       MemorySize: 128
       Timeout: 100
