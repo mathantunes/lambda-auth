@@ -15,7 +15,7 @@ Resources:
   LoginFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: app/login.login
+      Handler: login/app.handler
       CodeUri: ./built
       Runtime: nodejs12.x
       MemorySize: 128

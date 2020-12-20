@@ -8,7 +8,7 @@ import { LoginRequest } from "../domain/loginrequest";
 
 const secret: string = process.env.JWTSecret || "secret"
 
-export const login = async (event: APIGatewayProxyEvent) : Promise<APIGatewayProxyResult> => {
+export const handler = async (event: APIGatewayProxyEvent) : Promise<APIGatewayProxyResult> => {
     const req: LoginRequest = JSON.parse(event.body);
     // * Definitely authorized
     const token: string = jwt.sign({ User: req.username }, secret, { algorithm: "HS256", expiresIn: '1h' })
