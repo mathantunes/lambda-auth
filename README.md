@@ -4,7 +4,7 @@ Typescript lambda repo for authentication and token validation.
 
 It is a sample project that validates JWT tokens using lambda authorizers.
 
-It contains a **Login** endpoint that generates JWT tokens to allow for **Upper** functionality to be accessed by validating all incoming messages agains a Lambda authorizer
+It contains a **Login** endpoint that generates JWT tokens to allow for **Upper** functionality to be accessed by validating all incoming messages against a Lambda authorizer
 
 ## Setup
 
