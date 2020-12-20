@@ -32,3 +32,17 @@ Resources:
       Environment:
         Variables:
           JWTSecret: !Sub "${JWTSecret}"
+  Authorizer:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: authorizer/app.handler
+      CodeUri: ./built
+      Runtime: nodejs12.x
+      MemorySize: 128
+      Timeout: 10
+      Description: A lambda function authorizer that validates JWT tokens.
+      Policies:
+        - AWSLambdaBasicExecutionRole
+      Environment:
+        Variables:
+          JWTSecret: !Sub "${JWTSecret}"
