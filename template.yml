@@ -29,9 +29,30 @@ Resources:
           Properties:
             Path: /login
             Method: post
+            Auth:
+              Authorizer: NONE # Explicitly allowing for insecure endpoint
+            RestApiId: !Ref SecureAPI
       Environment:
         Variables:
           JWTSecret: !Sub "${JWTSecret}"
+  SecureUpperCaseFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: securefunctionality/app.handler
+      CodeUri: ./built
+      Runtime: nodejs12.x
+      MemorySize: 128
+      Timeout: 10
+      Description: A secure lambda that transforms the body to upper case
+      Policies:
+        - AWSLambdaBasicExecutionRole
+      Events:
+        UpperEvent:
+          Type: Api
+          Properties:
+            Path: /upper
+            Method: post
+            RestApiId: !Ref SecureAPI
   Authorizer:
     Type: AWS::Serverless::Function
     Properties:
@@ -46,3 +67,18 @@ Resources:
       Environment:
         Variables:
           JWTSecret: !Sub "${JWTSecret}"
+  SecureAPI:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: ""
+      Name: "Secure API"
+      Auth:
+        DefaultAuthorizer: CustomAuthorizer
+        Authorizers:
+          CustomAuthorizer:
+            FunctionPayloadType: REQUEST
+            FunctionArn: !GetAtt Authorizer.Arn
+            Identity:
+              Headers:
+                - token
+            ReauthorizeEvery: 60
