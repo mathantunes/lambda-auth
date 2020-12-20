@@ -1,14 +1,16 @@
 // Import all functions from hello-from-lambda.js
 import { APIGatewayProxyEvent } from 'aws-lambda';
-import * as lambda from './hello-from-lambda';
+import { LoginRequest } from '../domain/loginrequest';
+import * as lambda from './login';
 
-// This includes all tests for helloFromLambdaHandler()
 describe('Test for hello-from-lambda', function () {
-    // This test invokes helloFromLambdaHandler() and compare the result 
     it('Verifies successful response', async () => {
-        // Invoke helloFromLambdaHandler()
+        const loginRequest: LoginRequest = {
+            username: "User",
+            password: "Password"
+        }
         const event: APIGatewayProxyEvent = {
-            body: "Hello",
+            body: JSON.stringify(loginRequest),
             headers: {},
             multiValueHeaders: {},
             httpMethod: "",
@@ -21,9 +23,8 @@ describe('Test for hello-from-lambda', function () {
             requestContext: null,
             resource: ""
         }
-        const result = await lambda.helloFromLambdaHandler(event);
-        const expectedResult = 'Hello from Lambda!';
-        // Compare the result with the expected result
-        expect(result.body).toEqual(expectedResult);
+        const result = await lambda.login(event);
+        expect(result.statusCode).toEqual(200);
+        expect(result.headers.token).toBeDefined()
     }); 
 });

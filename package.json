@@ -17,5 +17,9 @@
         "prebuild": "mkdir -p ./built",
         "copy-dependencies": "cp ./package.json ./built/package.json && cd built && npm install --only=prod",
         "compile": "tsc"
+    },
+    "dependencies": {
+        "@types/jsonwebtoken": "^8.5.0",
+        "jsonwebtoken": "^8.5.1"
     }
 }
